@@ -1,0 +1,16 @@
+{
+  "name": "default",
+  "jwtPrivateKey": "unsecureKey",
+  "db": {
+    "proto": "mongodb",
+    "host": "127.0.0.1",
+    "user": "root",
+    "username": "",
+    "password": "password",
+    "hostname": "localhost",
+    "database": "mydb",
+    "schema": "LivesMatter"
+  },
+  "port": "5000",
+  "requiresAuth": true
+}

@@ -1,0 +1,6 @@
+{
+  "jwtPrivateKey": "LivesMatter_jwtPrivateKey",
+  "db": {
+    "password": "password"
+  }
+}
