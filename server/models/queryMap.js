@@ -8,6 +8,12 @@ const queryMap = {
         console.log("assignList ran");
         return `insert into ownership_table3 (table_id, owner_id) values (${tableid}, (select id from users where emp_no = '${emp_no}') )`
     }, 
+    findLatestPathForUser: (userId)=>{
+        return `select t.table_name from tables t
+                join users u on t.owner_id = u.id
+                where u.emp_no = '${userId}'`
+    },
+
     findTableForUser: (userId, tableName)=>{
         console.log("findTable ran")
         return `select u.emp_no, t.table_name from ownership_table3 o

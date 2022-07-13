@@ -1,4 +1,5 @@
 const connection = require("../db/dbConnection");
+const { use } = require("../routes/dataOperations");
 const {queryMap} = require('./queryMap');
 
 const getTableByUserModel = async (userId, tableId) =>{
@@ -8,6 +9,15 @@ const getTableByUserModel = async (userId, tableId) =>{
         
     } catch (error) {
         return {error};
+    }
+};
+
+const getLatestPathModel = async (userId)=>{
+    try {
+        const info = await connection.query(queryMap.findLatestPathForUser(userId));
+        return info[0];
+    } catch (error) {
+        return {modelError: true, error:error.message}
     }
 };
 
@@ -35,4 +45,4 @@ const createTableModel = async (name, emp_no)=>{
 
 
 
-module.exports = {getTableByUserModel, createTableModel, assignListModel};
+module.exports = {getTableByUserModel, createTableModel, assignListModel, getLatestPathModel};
