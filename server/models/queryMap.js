@@ -11,7 +11,7 @@ const queryMap = {
     findLatestPathForUser: (userId)=>{
         return `select t.table_name from tables t
                 join users u on t.owner_id = u.id
-                where u.emp_no = '${userId}'`
+                where u.emp_no = '${userId}' and  t.deleted != 'yes'`
     },
 
     findTableForUser: (userId, tableName)=>{

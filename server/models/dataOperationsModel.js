@@ -20,6 +20,14 @@ const getLatestPathModel = async (userId)=>{
         return {modelError: true, error:error.message}
     }
 };
+const deletePathModel = async (userId)=>{
+    try {
+        const info = await connection.query(queryMap.findLatestPathForUser(userId));
+        return info[0];
+    } catch (error) {
+        return {modelError: true, error:error.message}
+    }
+};
 
 const assignListModel = async (tableid, emp_no)=>{
     try {
@@ -45,4 +53,4 @@ const createTableModel = async (name, emp_no)=>{
 
 
 
-module.exports = {getTableByUserModel, createTableModel, assignListModel, getLatestPathModel};
+module.exports = {getTableByUserModel, createTableModel, assignListModel, getLatestPathModel, deletePathModel};
