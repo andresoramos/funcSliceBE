@@ -20,13 +20,26 @@ const getLatestPathModel = async (userId)=>{
         return {modelError: true, error:error.message}
     }
 };
-const deletePathModel = async (userId, empNo)=>{
+const deletePathModel = async (empNo, pathName)=>{
     try {
         const [info] = await connection.query(queryMap.findEmpId(empNo));
         const id = info[0]?.id;
         if(id){
-            const deleted = await connection.query(queryMap.deleteUserPath());
-            return true
+            const deleted = await connection.query(queryMap.deleteUserPath(pathName, id));
+            return deleted[0].changedRows;
+        }
+        throw new Error("Path could not be deleted")
+    } catch (error) {
+        return {modelError: true, error:error.message}
+    }
+};
+const pathUpdateModel = async (userId, newName) =>{
+    try {
+        const [info] = await connection.query(queryMap.findEmpId(empNo));
+        const id = info[0]?.id;
+        if(id){
+            const deleted = await connection.query(queryMap.deleteUserPath(pathName, id));
+            return deleted[0].changedRows;
         }
         throw new Error("Path could not be deleted")
     } catch (error) {

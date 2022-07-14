@@ -1,12 +1,14 @@
 const queryMap = {
     createPathTable: (tableName, owner_id)=>{
-        console.log("createPathTable ran", tableName, owner_id)
         return `insert INTO tables (table_name, owner_id)
         VALUES ('${tableName}', (select id from users where emp_no = '${owner_id}' limit 1));`
     },
     assignList: (tableid, emp_no)=>{
-        console.log("assignList ran");
         return `insert into ownership_table3 (table_id, owner_id) values (${tableid}, (select id from users where emp_no = '${emp_no}') )`
+    }, 
+    updatePathName: (newName, originalName, owner_id)=>{
+       
+        return `update tables set table_name = '${newName}' where table_name = '${originalName}' and owner_id = ${owner_id}`
     }, 
     findLatestPathForUser: (userId)=>{
         return `select t.table_name from tables t
