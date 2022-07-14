@@ -20,10 +20,10 @@ const getLatestPathModel = async (userId)=>{
         return {modelError: true, error:error.message}
     }
 };
-const deletePathModel = async (userId)=>{
+const deletePathModel = async (userId, empNo)=>{
     try {
-        const info = await connection.query(queryMap.findLatestPathForUser(userId));
-        return info[0];
+        const [info] = await connection.query(queryMap.findEmpId(empNo));
+        return info[0].id;
     } catch (error) {
         return {modelError: true, error:error.message}
     }

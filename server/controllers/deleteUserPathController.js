@@ -1,4 +1,4 @@
-const {getLatestPathModel} = require("../models/dataOperationsModel");
+const {deletePathModel} = require("../models/dataOperationsModel");
 
 
 const deleteUserPathController = async (req, res) =>{
@@ -7,9 +7,9 @@ const deleteUserPathController = async (req, res) =>{
         if(!userId || !pathName){
             throw new Error("User ID and path name required")
         };
-        const deleted = await deletePathModel(userId, pathName);
+        const id = await deletePathModel(userId, userId, pathName);
         
-        res.send({deleted:true})
+        res.send({id})
     } catch (error) {
         res.send({dataNotSent: true, error: error.message}) 
     }

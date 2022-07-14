@@ -13,6 +13,9 @@ const queryMap = {
                 join users u on t.owner_id = u.id
                 where u.emp_no = '${userId}' and  t.deleted != 'yes'`
     },
+    findEmpId: (empNo)=>{
+        return `select id from users where emp_no = '${empNo}' `
+    },
 
     findTableForUser: (userId, tableName)=>{
         console.log("findTable ran")
