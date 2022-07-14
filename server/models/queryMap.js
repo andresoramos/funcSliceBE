@@ -7,7 +7,6 @@ const queryMap = {
         return `insert into ownership_table3 (table_id, owner_id) values (${tableid}, (select id from users where emp_no = '${emp_no}') )`
     }, 
     updatePathName: (newName, originalName, owner_id)=>{
-       
         return `update tables set table_name = '${newName}' where table_name = '${originalName}' and owner_id = ${owner_id}`
     }, 
     findLatestPathForUser: (userId)=>{
