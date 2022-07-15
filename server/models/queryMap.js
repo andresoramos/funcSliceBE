@@ -9,6 +9,9 @@ const queryMap = {
     updatePathName: (newName, originalName, owner_id)=>{
         return `update tables set table_name = '${newName}' where table_name = '${originalName}' and owner_id = ${owner_id}`
     }, 
+    getTableId: (name, owner_id)=>{
+        return `select tableid from tables where table_name = '${name}' and owner_id = ${owner_id}`
+    }, 
     findLatestPathForUser: (userId)=>{
         return `select t.table_name from tables t
                 join users u on t.owner_id = u.id

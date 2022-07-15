@@ -9,7 +9,7 @@ const getNewestPathController = async (req, res) =>{
         }
         const pathData = await getLatestPathModel(userId);
         if(!pathData.length){
-            return res.send({newPathName: "Path 1"});
+            return res.send({highestPath: "Path 1"});
         }
         let highestPath = "Path 1";
         pathData.forEach((item)=>{

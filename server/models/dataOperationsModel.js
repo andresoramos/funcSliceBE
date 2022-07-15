@@ -46,6 +46,19 @@ const pathUpdateModel = async (userId, newName, originalName) =>{
         return {modelError: true, error:error.message}
     }
 };
+const getSpecificPointModel = async (userId, pathName, index) =>{
+    try {
+        const [info] = await connection.query(queryMap.findEmpId(userId));
+        const id = info[0]?.id;
+        if(id){
+            const updated = await connection.query(queryMap.updatePathName(newName, originalName, id));
+            return updated[0].changedRows;
+        }
+        throw new Error("Path could not be updated")
+    } catch (error) {
+        return {modelError: true, error:error.message}
+    }
+};
 
 const assignListModel = async (tableid, emp_no)=>{
     try {
@@ -71,4 +84,4 @@ const createTableModel = async (name, emp_no)=>{
 
 
 
-module.exports = {getTableByUserModel, createTableModel, assignListModel, pathUpdateModel, getLatestPathModel, deletePathModel};
+module.exports = {getTableByUserModel, getSpecificPointModel, createTableModel, assignListModel, pathUpdateModel, getLatestPathModel, deletePathModel};
