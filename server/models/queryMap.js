@@ -10,7 +10,7 @@ const queryMap = {
         return `update tables set table_name = '${newName}' where table_name = '${originalName}' and owner_id = ${owner_id}`
     }, 
     getTableId: (name, owner_id)=>{
-        return `select tableid from tables where table_name = '${name}' and owner_id = ${owner_id}`
+        return `select tableid from tables where table_name = '${name}' and owner_id = ${owner_id} and deleted = 'No'`
     }, 
     findLatestPathForUser: (userId)=>{
         return `select t.table_name from tables t
@@ -32,14 +32,18 @@ const queryMap = {
         where u.emp_no = '${userId}' and t.table_name = '${tableName}'`
     },
     addPoint: (tableId, ind, x, y, z, station, emp_no)=>{
-        console.log("addPoint ran")
         return `insert into points (table_id, station, x, y, z, ind, emp_no) values (${tableId},${station},${x},${y},${z},${ind}, (select id from users where emp_no = '${emp_no}' limit 1))`
     },
+    getPointList: (table_id)=>{ 
+        return `select * from points where table_id = ${table_id}`
+    },
+    updateIndividualPoint: (id, x, y, z)=>{ 
+        return `update points set x = ${x}, y = ${y}, z = ${z} where idpoints = ${id}`
+    },
     getTableIdByName: (emp_no, name)=>{
-        console.log("getTableIdByName ran")
         return `select t.tableid from tables t
         join users u on u.id = t.owner_id
-        where u.emp_no = '${emp_no}' and t.table_name = '${name}'`
+        where u.emp_no = '${emp_no}' and t.table_name = '${name}' and t.deleted = 'No'`
     }
 };
 

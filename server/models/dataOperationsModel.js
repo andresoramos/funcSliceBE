@@ -46,15 +46,31 @@ const pathUpdateModel = async (userId, newName, originalName) =>{
         return {modelError: true, error:error.message}
     }
 };
-const getSpecificPointModel = async (userId, pathName, index) =>{
+const updateSpecificPointModel = async (userId, pathName, index, x, y, z) =>{
     try {
-        const [info] = await connection.query(queryMap.findEmpId(userId));
-        const id = info[0]?.id;
-        if(id){
-            const updated = await connection.query(queryMap.updatePathName(newName, originalName, id));
-            return updated[0].changedRows;
-        }
-        throw new Error("Path could not be updated")
+        
+            const tableId = await connection.query(queryMap.getTableIdByName(userId, pathName));
+            if(tableId[0] && tableId[0].length){
+                const tableIdForPoints = tableId[0][0].tableid;
+                const getPointId = await connection.query(queryMap.getPointList(tableIdForPoints));
+                if(getPointId[0] && getPointId[0].length){
+                    const pointToBeFixed = getPointId[0][index];
+                    if(pointToBeFixed !== undefined){
+                        const pointId = pointToBeFixed.idpoints;
+                        const updatePoint = await connection.query(queryMap.updateIndividualPoint(pointId, x, y, z))
+                        if(updatePoint[0] && updatePoint[0].changedRows){
+                            if(updatePoint[0].changedRows > 0){
+                                return true
+                            }
+                            throw new Error("No rows updated")
+                        }
+                        throw new Error("No rows updated")
+                    }
+                    throw new Error("Index not available in path list")
+                }
+                throw new Error("Table with point cannot be found");
+            }
+        throw new Error("Id can't be found")
     } catch (error) {
         return {modelError: true, error:error.message}
     }
@@ -84,4 +100,4 @@ const createTableModel = async (name, emp_no)=>{
 
 
 
-module.exports = {getTableByUserModel, getSpecificPointModel, createTableModel, assignListModel, pathUpdateModel, getLatestPathModel, deletePathModel};
+module.exports = {getTableByUserModel, updateSpecificPointModel, createTableModel, assignListModel, pathUpdateModel, getLatestPathModel, deletePathModel};
