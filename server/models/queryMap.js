@@ -31,13 +31,16 @@ const queryMap = {
         join tables t on t.tableid = o.table_id
         where u.emp_no = '${userId}' and t.table_name = '${tableName}'`
     },
-    addPoint: (tableId, ind, x, y, z, station, emp_no)=>{
-        return `insert into points (table_id, station, x, y, z, ind, emp_no) values (${tableId},${station},${x},${y},${z},${ind}, (select id from users where emp_no = '${emp_no}' limit 1))`
+    addPoint: (tableId, ind, x, y, z, station, emp_no, path_name)=>{
+        return `insert into points (table_id, station, x, y, z, ind, emp_no, path_name) values (${tableId},${station},${x},${y},${z},${ind}, (select id from users where emp_no = '${emp_no}' limit 1), ${path_name})`
     },
     getPointList: (table_id)=>{ 
         return `select * from points where table_id = ${table_id}`
     },
     updateIndividualPoint: (id, x, y, z)=>{ 
+        return `update points set x = ${x}, y = ${y}, z = ${z} where idpoints = ${id}`
+    },
+    updatePointName: (id, newName)=>{ 
         return `update points set x = ${x}, y = ${y}, z = ${z} where idpoints = ${id}`
     },
     getTableIdByName: (emp_no, name)=>{
