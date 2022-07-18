@@ -32,7 +32,7 @@ const queryMap = {
         where u.emp_no = '${userId}' and t.table_name = '${tableName}'`
     },
     addPoint: (tableId, ind, x, y, z, station, emp_no, path_name)=>{
-        return `insert into points (table_id, station, x, y, z, ind, emp_no, path_name) values (${tableId},${station},${x},${y},${z},${ind}, (select id from users where emp_no = '${emp_no}' limit 1), ${path_name})`
+        return `insert into points (table_id, station, x, y, z, ind, emp_no, path_name) values (${tableId},${station},${x},${y},${z},${ind}, (select id from users where emp_no = '${emp_no}' limit 1), '${path_name}')`
     },
     getPointList: (table_id)=>{ 
         return `select * from points where table_id = ${table_id}`
@@ -41,7 +41,7 @@ const queryMap = {
         return `update points set x = ${x}, y = ${y}, z = ${z} where idpoints = ${id}`
     },
     updatePointName: (id, newName)=>{ 
-        return `update points set x = ${x}, y = ${y}, z = ${z} where idpoints = ${id}`
+        return `update points set path_name = '${newName}' where idpoints = ${id}`
     },
     getTableIdByName: (emp_no, name)=>{
         return `select t.tableid from tables t

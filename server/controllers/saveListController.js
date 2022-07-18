@@ -11,9 +11,6 @@ const saveListController = async (req, res) =>{
         return res.send({saveFailure: "Missing info"});
     }
     try {
-        // remove the two lines below
-        // await connection.query(`delete from points where idpoints != 0`)
-        //  await connection.query(`DELETE FROM tables WHERE table_name = 'Path 1'`)
         const tableCreated = await createTableModel(name, emp_no);
         if(tableCreated){
             if(tableCreated.error){

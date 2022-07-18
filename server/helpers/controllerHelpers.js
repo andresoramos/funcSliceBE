@@ -7,8 +7,8 @@ const saveListPoints = async (list, emp_no, name)=>{
         let ind = i;
         let coordinates = item.vector;
         let {station} = item;
-        const pointSaved = await savePointModel(ind, coordinates, station, emp_no, name); 
-        console.log(pointSaved, 'Point saved')
+        let pathName = item.name;
+        const pointSaved = await savePointModel(ind, coordinates, station, emp_no, name, pathName); 
         if(!pointSaved  || pointSaved.error){
             return {savePointSuccess: false}
         }
