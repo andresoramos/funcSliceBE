@@ -6,6 +6,7 @@ const updateNameController = require('../controllers/updateNameController');
 const updateSpecificPointController = require('../controllers/updateSpecificPointController');
 const updatePointNameController = require('../controllers/updatePointNameController');
 const addPointController = require("../controllers/addPointController")
+const deletePointController = require("../controllers/deletePointController")
 const dataOperationsRouter = express.Router();
 
 dataOperationsRouter.get("/get_table_by_user/:userId/:tableName", getTableByUserController);
@@ -15,6 +16,7 @@ dataOperationsRouter.put("/update_path_name/", updateNameController)
 dataOperationsRouter.put("/update_point/", updateSpecificPointController)
 dataOperationsRouter.put("/update_point_name/", updatePointNameController)
 dataOperationsRouter.put("/add_point/", addPointController)
+dataOperationsRouter.put("/delete_point/", deletePointController)
 
 
 

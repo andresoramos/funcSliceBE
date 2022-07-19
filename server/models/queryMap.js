@@ -43,6 +43,9 @@ const queryMap = {
     updatePointName: (id, newName)=>{ 
         return `update points set path_name = '${newName}' where idpoints = ${id}`
     },
+    delete: (id)=>{ 
+        return `update points set deleted = 1 where idpoints = ${id}`
+    },
     getTableIdByName: (emp_no, name)=>{
         return `select t.tableid from tables t
         join users u on u.id = t.owner_id
