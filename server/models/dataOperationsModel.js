@@ -74,6 +74,34 @@ const updateSpecificPointModel = async (userId, pathName, index, x, y, z) =>{
         return {modelError: true, error:error.message}
     }
 };
+const changeStationModel = async (userId, pathName, index, station) =>{
+    try {
+            const tableId = await connection.query(queryMap.getTableIdByName(userId, pathName));
+            if(tableId[0] && tableId[0].length){
+                const tableIdForPoints = tableId[0][0].tableid;
+                const getPointId = await connection.query(queryMap.getPointList(tableIdForPoints));
+                if(getPointId[0] && getPointId[0].length){
+                    const pointToBeFixed = getPointId[0][index];
+                    if(pointToBeFixed !== undefined){
+                        const pointId = pointToBeFixed.idpoints;
+                        const updatePoint = await connection.query(queryMap.changeStation(pointId, station))
+                        if(updatePoint[0] && updatePoint[0].changedRows){
+                            if(updatePoint[0].changedRows > 0){
+                                return true
+                            }
+                            throw new Error("No rows updated")
+                        }
+                        throw new Error("No rows updated")
+                    }
+                    throw new Error("Index not available in path list")
+                }
+                throw new Error("Table with point cannot be found");
+            }
+        throw new Error("Id can't be found")
+    } catch (error) {
+        return {modelError: true, error:error.message}
+    }
+};
 const deletePointModel = async (userId, pathName, pointIndex) =>{
     try {
             const tableId = await connection.query(queryMap.getTableIdByName(userId, pathName));
@@ -155,4 +183,7 @@ const createTableModel = async (name, emp_no)=>{
 
 
 
-module.exports = {getTableByUserModel, updatePointNameModel, updateSpecificPointModel, deletePointModel, createTableModel, assignListModel, pathUpdateModel, getLatestPathModel, deletePathModel};
+module.exports = {getTableByUserModel, updatePointNameModel, 
+     updateSpecificPointModel, deletePointModel, 
+     createTableModel, assignListModel, changeStationModel,
+     pathUpdateModel, getLatestPathModel, deletePathModel};
