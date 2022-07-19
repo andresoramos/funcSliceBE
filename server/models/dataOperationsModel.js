@@ -74,7 +74,7 @@ const updateSpecificPointModel = async (userId, pathName, index, x, y, z) =>{
         return {modelError: true, error:error.message}
     }
 };
-const changeStationModel = async (userId, pathName, index, station) =>{
+const changeStationModel = async (userId, pathName, index, station, name) =>{
     try {
             const tableId = await connection.query(queryMap.getTableIdByName(userId, pathName));
             if(tableId[0] && tableId[0].length){
@@ -84,7 +84,7 @@ const changeStationModel = async (userId, pathName, index, station) =>{
                     const pointToBeFixed = getPointId[0][index];
                     if(pointToBeFixed !== undefined){
                         const pointId = pointToBeFixed.idpoints;
-                        const updatePoint = await connection.query(queryMap.changeStation(pointId, station))
+                        const updatePoint = await connection.query(queryMap.changeStation(pointId, station ? 1 : 0, name))
                         if(updatePoint[0] && updatePoint[0].changedRows){
                             if(updatePoint[0].changedRows > 0){
                                 return true

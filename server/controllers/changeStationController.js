@@ -5,12 +5,12 @@ const isUndefined = (item)=>{
 };
 
 const changeStationController = async (req, res) =>{
-    let {userId, pathName, pointIndex, station} = req.body
+    let {userId, pathName, pointIndex, station, name} = req.body
     try {
-        if(isUndefined(userId) || isUndefined(pathName)|| isUndefined(pointIndex) || isUndefined){
+        if(isUndefined(userId) || isUndefined(pathName)|| isUndefined(pointIndex) || isUndefined(name) || isUndefined(station)){
             throw new Error("Necessary information for update is missing");
         };
-        const pointDeleted = await changeStationModel(userId, pathName, pointIndex, station);
+        const pointDeleted = await changeStationModel(userId, pathName, pointIndex, station, name);
         if(pointDeleted.error){
             throw new Error("New point could not be saved");
         }
