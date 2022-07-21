@@ -136,6 +136,11 @@ const updatePointNameModel = async (userId, pathName, index, newName) =>{
             if(tableId[0] && tableId[0].length){
                 const tableIdForPoints = tableId[0][0].tableid;
                 const getPointId = await connection.query(queryMap.getPointList(tableIdForPoints));
+                for(let item of getPointId[0]){
+                    if(item.path_name === newName){
+                        throw new Error("Two points cannot have the same name")
+                    }
+                }
                 if(getPointId[0] && getPointId[0].length){
                     const pointToBeFixed = getPointId[0][index];
                     if(pointToBeFixed !== undefined){

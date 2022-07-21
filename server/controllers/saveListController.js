@@ -8,7 +8,7 @@ const saveListController = async (req, res) =>{
     const {payload} = body;
     const {name, cleanedList, emp_no} = payload;
     if(!name || !cleanedList){
-        return res.send({saveFailure: "Missing info"});
+        return res.send({saveFailure: true, error: "Missing info"});
     }
     try {
         const tableCreated = await createTableModel(name, emp_no);
@@ -30,7 +30,6 @@ const saveListController = async (req, res) =>{
         // await connection.query(queryMap.createPathTable(name));
         
     } catch (error) {
-        console.log("ERROR: ", error)
         res.send({saveFailure: true, error: "Error occurred while saving list.  Refer to logs for details.", errLog: error })
     }
     // First, search that a table doesn't have the same name and owner; If so, send back a 401 as a bad request
