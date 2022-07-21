@@ -20,6 +20,9 @@ const queryMap = {
     findEmpId: (empNo)=>{
         return `select id from users where emp_no = '${empNo}' `
     },
+    findTableWithIDandName: (id, name)=>{
+        return `select * from tables where table_name = '${name}' and owner_id = ${id}`
+    },
     deleteUserPath: (table_name, owner_id)=>{
         return `update tables set deleted = 'yes' where table_name = '${table_name}' and owner_id = ${owner_id}`
     },

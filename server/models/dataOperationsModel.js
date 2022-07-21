@@ -38,6 +38,10 @@ const pathUpdateModel = async (userId, newName, originalName) =>{
         const [info] = await connection.query(queryMap.findEmpId(userId));
         const id = info[0]?.id;
         if(id){
+            const tableExists = await connection.query(queryMap.findTableWithIDandName(id, newName));
+            if(tableExists[0].length){
+                throw new Error("Name already exists")
+            }
             const updated = await connection.query(queryMap.updatePathName(newName, originalName, id));
             return updated[0].changedRows;
         }
