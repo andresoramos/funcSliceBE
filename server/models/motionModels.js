@@ -1,13 +1,15 @@
 const connection = require('../db/dbConnection');
-const {queryMap} = require('./queryMap')
+const {queryMap} = require('./queryMap');
+const {getState} = require('../../zeroMQ/stateUpdates/stateUpdates');
 
-const validModelArgs = function(ind, x,y,z, station, emp_no, tableName, pathName){
-    for(let key in arguments){
-        if(arguments[key] === undefined){
-            return false;
-        }
-    };
-    return true
+
+const comparePoints = function(point1, point2){
+   for(let key in point1){
+    if(point1[key] !== point2[key]){
+        return false;
+    }
+   }
+   return true;
 }
 
 const runListModel = async (userId, pathName)=>{
@@ -31,13 +33,19 @@ const runListModel = async (userId, pathName)=>{
         }else{
             throw new Error(`No points available for ${pathName}`)
         }
-        console.log(firstPoint)
-        const pointSaved = await connection.query(queryMap.addPoint(tableid, ind, x, y, z, station, emp_no, pathName));
-        if(pointSaved){
-            return {pointSaved:true, tableid}
+        const presentPoint = await getState();
+        // Delete the fake point later and pass in first point as second arg to comparePoints
+        const {x,y,z} = presentPoint;
+        if(presentPoint){
+            const atPosition = comparePoints(presentPoint, {x,y,z});
+            if(!atPosition){
+                throw new Error("Robot needs to return to starting position");
+            }
+            const sendStartMessageToMotionLayer;
+
         }
-        return false;
-        // (tableId, ind, x, y, z, station, emp_no)
+        throw new Error("Unable to get present state");
+       
         
     } catch (error) {
         console.log(error, "This is the error")
