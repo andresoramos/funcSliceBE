@@ -1,6 +1,7 @@
 const connection = require('../db/dbConnection');
 const {queryMap} = require('./queryMap');
 const {getState} = require('../../zeroMQ/stateUpdates/stateUpdates');
+const {messageMotionLayer} = require('../../zeroMQ/sendToMotionLayer')
 
 
 const comparePoints = function(point1, point2){
@@ -41,7 +42,8 @@ const runListModel = async (userId, pathName)=>{
             if(!atPosition){
                 throw new Error("Robot needs to return to starting position");
             }
-            const sendStartMessageToMotionLayer;
+            const sendStartMessageToMotionLayer = await messageMotionLayer({order: "run", list: tablePoints});
+            console.log(sendStartMessageToMotionLayer);
 
         }
         throw new Error("Unable to get present state");
