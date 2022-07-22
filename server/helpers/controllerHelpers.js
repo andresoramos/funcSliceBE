@@ -29,6 +29,9 @@ const assignListToOwner = async (tableid, emp_no)=>{
     } catch (error) {
         return {listAssigned: false, error}
     }
-}
+};
+const isUndefined = (item)=>{
+    return item === undefined
+};
 
-module.exports = {saveListPoints, assignListToOwner}
+module.exports = {saveListPoints, isUndefined, assignListToOwner}

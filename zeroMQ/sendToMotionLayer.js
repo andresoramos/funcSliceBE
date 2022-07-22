@@ -8,9 +8,9 @@ publisher.bind('tcp://*:9000', function(err) {
         console.log("Listening on 9000...")
 });
 
-// publisher.on("message", (message)=>{
-//     console.log("Response was received: ", message.toString())
-// });
+publisher.on("message", (message)=>{
+    console.log("Response was received: ", message.toString())
+});
 
 const messageMotionLayer = async ()=>{
     console.log('sent');
